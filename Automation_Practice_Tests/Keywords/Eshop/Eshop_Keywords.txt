@@ -1,0 +1,47 @@
+*** Settings ***
+Library    SeleniumLibrary
+Variables	../../Objects/Eshop/Eshop_Objects.py
+Variables    ../../Variables/Eshop/Sorting_Filtering_Variables.txt
+
+*** Keywords ***    
+Capture Screenshot And Close Browser
+    Capture Page Screenshot    
+    Close Browser
+
+Open Women Section
+    Open Browser    ${url}    ${browser}
+    Maximize Browser Window
+    Click Element	${Woman_tab}
+    Wait Until Page Contains Element    ${Sorting_dropdown}
+    
+Unfold Sorting Dropdown
+	Click Element	${Sorting_dropdown}
+
+Sorting By All Categories
+	[Arguments]  ${Sorting_dropdown}  ${Sorting_category}
+	Select From List By Label    ${Sorting_dropdown}	${Sorting_category}
+	Element Should Contain		xpath=//*[@id="uniform-selectProductSort"]/span		${Sorting_category}
+	Capture Screenshot And Close Browser
+	Open Women Section
+	
+Filtering By All Sizes
+	[Arguments]  ${Sizes_filter}  ${Size_index}		${Size_locator}
+	Select From List By Index    ${Sizes_filter}		${Size_index}
+	Checkbox Should Be Selected 	${Size_locator}
+	Capture Screenshot And Close Browser
+	Open Women Section
+	
+Select Price: Lowest First
+	Select From List By Index	${Sorting_dropdown}		0
+
+Disable Filter
+	Click Element	${Close_filter_icon}
+
+Filter By Dresses Category
+	Select Checkbox    ${Filtering_categories_dresses_checkbox}
+    Wait Until Element Is Visible    ${Enabled_filters}
+
+	
+    
+
+    
