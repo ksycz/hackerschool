@@ -3,7 +3,7 @@ Library    SeleniumLibrary
 Library    Collections
 Resource    ../../Keywords/Eshop/Eshop_Keywords.txt
 Variables	../../Objects/Eshop/Eshop_Objects.py
-Variables    ../../Variables/Eshop/Sorting_Filtering_Variables.txt
+Resource    ../../Resources/Eshop/Sorting_Filtering_Variables.txt
 Test Setup    Open Women Section
 Test Teardown    Capture Screenshot And Close Browser
 

@@ -1,7 +1,7 @@
 *** Settings ***
 Library    SeleniumLibrary
 Variables	../../Objects/Eshop/Eshop_Objects.py
-Variables    ../../Variables/Eshop/Sorting_Filtering_Variables.txt
+Resource    ../../Resources/Eshop/Sorting_Filtering_Variables.txt
 
 *** Keywords ***    
 Capture Screenshot And Close Browser
@@ -9,9 +9,8 @@ Capture Screenshot And Close Browser
     Close Browser
 
 Open Women Section
-    Open Browser    ${url}    ${browser}
+    Open Browser    ${WOMEN_SECTION_URL}    ${BROWSER}
     Maximize Browser Window
-    Click Element	${Woman_tab}
     Wait Until Page Contains Element    ${Sorting_dropdown}
     
 Unfold Sorting Dropdown
@@ -20,7 +19,7 @@ Unfold Sorting Dropdown
 Sorting By All Categories
 	[Arguments]  ${Sorting_dropdown}  ${Sorting_category}
 	Select From List By Label    ${Sorting_dropdown}	${Sorting_category}
-	Element Should Contain		xpath=//*[@id="uniform-selectProductSort"]/span		${Sorting_category}
+	Element Should Contain		${SORT_DROPDOWN_SELECTED_ITEM}		${Sorting_category}
 	Capture Screenshot And Close Browser
 	Open Women Section
 	
