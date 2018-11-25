@@ -8,38 +8,83 @@ Capture Screenshot And Close Browser
     Capture Page Screenshot    
     Close Browser
 
-Open Women Section
-    Open Browser    ${WOMEN_SECTION_URL}    ${BROWSER}
+Open Automation Practice Website
+    Open Browser    ${AUTOMATION_PRACTICE_URL}    ${BROWSER}
     Maximize Browser Window
-    Wait Until Page Contains Element    ${Sorting_dropdown}
+    
+Click The Woman Tab
+    Click Element    ${Woman_tab}
+    Wait Until Element Is Visible    ${Category_name}
     
 Unfold Sorting Dropdown
 	Click Element	${Sorting_dropdown}
 
-Sorting By All Categories
-	[Arguments]  ${Sorting_dropdown}  ${Sorting_category}
-	Select From List By Label    ${Sorting_dropdown}	${Sorting_category}
-	Element Should Contain		${SORT_DROPDOWN_SELECTED_ITEM}		${Sorting_category}
-	Capture Screenshot And Close Browser
-	Open Women Section
-	
-Filtering By All Sizes
-	[Arguments]  ${Sizes_filter}  ${Size_index}		${Size_locator}
-	Select From List By Index    ${Sizes_filter}		${Size_index}
-	Checkbox Should Be Selected 	${Size_locator}
-	Capture Screenshot And Close Browser
-	Open Women Section
-	
-Select Price: Lowest First
-	Select From List By Index	${Sorting_dropdown}		0
+Check If Sorting Dropdown Contains At Least One Item
+    Element Should Contain    ${Sorting_dropdown}    ${SORT_LOWEST_PRICE}
 
-Disable Filter
-	Click Element	${Close_filter_icon}
+Check If Website Title Is Correct
+    Title Should Be    ${WOMAN_PAGE_TITLE}
 
-Filter By Dresses Category
-	Select Checkbox    ${Filtering_categories_dresses_checkbox}
+Click The Top Tab
+    Click Element        ${Tops_section}
+    
+Check If The Main Filter Contains T-Shirt
+    Element Should Contain    ${Filter_category}    ${T-SHIRTS_CAT}
+
+Click The Dresses Tab
+    Click Element    ${Dresses_section}
+
+Click The Evening Dresses Tab
+    Click Element    ${Evening_dresses_subsection}
+    
+Check If Category Name Contains Evening Dresses
+    Element Should Contain    ${Category_name}    ${EVENING_DRESSES_CAT_NAME}   
+    
+Tick The Dresses Checkbox
+	Click Element    ${Filtering_categories_dresses_checkbox}
     Wait Until Element Is Visible    ${Enabled_filters}
 
+Check If Url Contains Dresses Category
+    Location Should Contain    ${FILTER_CAT_URL_DRESSES}
+
+Check If Url Contains Woman Section
+    Wait Until Page Does Not Contain    ${WOMAN_PAGE_TITLE}
+    
+Disable Dresses Filter
+	Click Element	${Close_filter_icon}
+	
+Tick The S Size
+    Click Element    ${Dress_size_s}
+
+Click The Beige Color
+    Click Element    ${Dress_color_beige}
+    
+Check If The Number Of Beige S Dresses Is Correct
+    Wait Until Element Contains    ${Product_counter}    ${COUNTER_MESSAGE}
+        
+Sorting By All Categories
+	[Arguments]  ${Sorting_category}
+	 :FOR    ${Sorting_category}    IN    ${Sorting_dropdown}
+    \    Click Element    ${Sorting_category}
+    \    Element Should Contain		${Sort_dropdown_selected_item}    ${Sorting_category}
+	
+	
+Select Price: Lowest First From Sorting Dropdown
+	Click Element    ${Sorting_lowest_price}
+	
+Check If The Last Price Is Greater Than The First One
+    [Arguments]  ${FIRST_PRICE}    ${LAST_PRICE}
+    ${FIRST_PRICE}=    Get Text    ${First_price}
+    ${LAST_PRICE}=    Get Text    ${Last_price}
+    Should Be True    ${FIRST_PRICE} < ${LAST_PRICE}
+
+Select In Stock From Sorting Dropdown
+    Click Element    ${Sorting_in_stock}
+    
+Check If The In Stock Item Is Visible
+    Element Should Be Visible    ${In_stock}   
+    
+    
 	
     
 
